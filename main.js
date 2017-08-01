@@ -6,8 +6,10 @@ const files = [
   '.cache'
 ]
 
+const endsWithWav = file => file.endsWith('.wav')
+
 const listTrackFiles = () => {
-  return files.filter( file => file.endsWith('.wav') )
+  return files.filter( endsWithWav )
 }
 
 console.log('tracks:')
