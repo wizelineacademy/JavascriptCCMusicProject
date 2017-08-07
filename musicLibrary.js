@@ -12,4 +12,20 @@ function listTrackFiles() {
   return files.filter( endsWithWav );
 }
 
-exports.listTrackFiles = listTrackFiles;
+function getTrackFile(index) {
+  const trackFiles = listTrackFiles();
+  if(index >= trackFiles.length) {
+    return null;
+  } else {
+    return {
+      name: files[index],
+      duration: '01:00'
+    };
+  }
+
+}
+
+module.exports = {
+  listTrackFiles,
+  getTrackFile
+};
