@@ -1,2 +1,5 @@
 'use strict'
-console.log('hello world!')
+
+const MusicLibrary = require('./musicLibrary.js');
+
+console.info('tracks: ', MusicLibrary.listTrackFiles());
