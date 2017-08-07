@@ -1,5 +1,5 @@
 'use strict'
-const TimeUtils = require('./timeUtils.js');
+const Track = require('./model/track.js');
 
 const files = [
   'track1.wav',
@@ -18,15 +18,9 @@ function getTrackFile(index) {
   if(index >= trackFiles.length) {
     return null;
   } else {
-    const name = files[index];
-    const ms = TimeUtils.getTrackMs(name);
-    return {
-      name,
-      duration_as_ms: ms,
-      duration_as_time_format: TimeUtils.msToTimeFormat(ms)
-    };
+    const track = new Track(files[index]);
+    return track.decorate();
   }
-
 }
 
 module.exports = {
