@@ -1,5 +1,5 @@
 'use strict'
-const TimeUtils = require('../timeUtils.js');
+const TimeUtils = require('../util/timeUtils.js');
 
 module.exports = class Track {
   constructor(name) {
