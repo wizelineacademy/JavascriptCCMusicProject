@@ -1,16 +1,9 @@
 'use strict'
+const FileUtils = require('./util/fileUtils.js');
 const Track = require('./model/track.js');
 
-const files = [
-  'track1.wav',
-  'track2.wav',
-  '.cache'
-];
-
-const endsWithWav = file => file.endsWith('.wav');
-
 function listTrackFiles() {
-  return files.filter( endsWithWav );
+  return FileUtils.getFiles().filter( FileUtils.isWavFile );
 }
 
 function getTrackFile(index) {
@@ -18,7 +11,7 @@ function getTrackFile(index) {
   if(index >= trackFiles.length) {
     return null;
   } else {
-    const track = new Track(files[index]);
+    const track = new Track(trackFiles[index]);
     return track.decorate();
   }
 }
