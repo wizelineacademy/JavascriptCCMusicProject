@@ -2,19 +2,21 @@
 const FileUtils = require('./util/fileUtils.js');
 const Track = require('./model/track.js');
 
-function listTrackFiles() {
-  return FileUtils.getFiles().filter( FileUtils.isWavFile );
-}
+const listTrackFiles = () => new Promise((resolve, reject) => {
+  const trackFiles = FileUtils.getFiles().filter(FileUtils.isWavFile);
+  resolve(trackFiles);
+});
 
-function getTrackFile(index) {
-  const trackFiles = listTrackFiles();
-  if(index >= trackFiles.length) {
-    return null;
-  } else {
-    const track = new Track(trackFiles[index]);
-    return track.decorate();
-  }
-}
+const getTrackFile = (index) => new Promise((resolve, reject) => {
+  listTrackFiles().then( trackFiles => {
+    if(index >= trackFiles.length) {
+      reject('Index out of bones');
+    } else {
+      const track = new Track(trackFiles[index]);
+      resolve(track.decorate());
+    }
+  });
+});
 
 module.exports = {
   listTrackFiles,

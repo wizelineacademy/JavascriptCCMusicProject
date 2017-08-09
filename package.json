@@ -5,8 +5,9 @@
   "scripts": {
     "main": "node --harmony main.js"
   },
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
+    "express": "^4.15.4",
+    "http-status": "^1.0.1",
     "moment": "^2.18.1"
   }
 }
