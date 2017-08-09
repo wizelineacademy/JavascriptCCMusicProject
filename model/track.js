@@ -2,10 +2,10 @@
 const TimeUtils = require('../util/timeUtils.js');
 
 module.exports = class Track {
-  constructor(name, path) {
+  constructor(name, path, ms) {
     this.name = name;
     this.path = path;
-    this.ms = TimeUtils.getTrackMs(name);
+    this.ms = ms;
   }
 
   decorate() {
