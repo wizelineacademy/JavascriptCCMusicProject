@@ -3,8 +3,10 @@ const FileUtils = require('./util/fileUtils.js');
 const Track = require('./model/track.js');
 
 const listTrackFiles = () => new Promise((resolve, reject) => {
-  const trackFiles = FileUtils.getFiles().filter(FileUtils.isWavFile);
-  resolve(trackFiles);
+  FileUtils.getFiles().then( files => {
+    const trackFiles = files.filter(FileUtils.isWavFile);
+    resolve(trackFiles);
+  })
 });
 
 const getTrackFile = (index) => new Promise((resolve, reject) => {

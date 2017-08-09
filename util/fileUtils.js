@@ -1,10 +1,13 @@
 'use strict'
+const fs = require('fs');
 
-const getFiles = path => [
-  'track1.wav',
-  'track2.wav',
-  '.cache'
-];
+const DIR = './tracks';
+
+const getFiles = () => new Promise((resolve, reject) => {
+  fs.readdir(DIR, (err, files) => {
+    resolve(files);
+  });
+});
 
 const isWavFile = file => file.endsWith('.wav');
 
