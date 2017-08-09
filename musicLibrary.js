@@ -1,28 +1,22 @@
 'use strict'
+const FileUtils = require('./util/fileUtils.js');
+const Track = require('./model/track.js');
 
-const files = [
-  'track1.wav',
-  'track2.wav',
-  '.cache'
-];
-
-const endsWithWav = file => file.endsWith('.wav');
-
-// ie. Using imperative programming
-/*function listTrackFiles() {
-  const wavFiles = [];
-  for(let i=0; i<files.length; i++) {
-    const file = files[i];
-    if(endsWithWav(file)) {
-      wavFiles.push(file);
-    }
-  }
-  return wavFiles;
-}*/
-
-// ie. Using a high order function
 function listTrackFiles() {
-  return files.filter( endsWithWav );
+  return FileUtils.getFiles().filter( FileUtils.isWavFile );
 }
 
-exports.listTrackFiles = listTrackFiles;
+function getTrackFile(index) {
+  const trackFiles = listTrackFiles();
+  if(index >= trackFiles.length) {
+    return null;
+  } else {
+    const track = new Track(trackFiles[index]);
+    return track.decorate();
+  }
+}
+
+module.exports = {
+  listTrackFiles,
+  getTrackFile
+};

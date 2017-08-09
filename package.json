@@ -5,6 +5,8 @@
   "scripts": {
     "main": "node --harmony main.js"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "moment": "^2.18.1"
   }
 }
