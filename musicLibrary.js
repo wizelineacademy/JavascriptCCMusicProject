@@ -14,8 +14,11 @@ const getTrackFile = (index) => new Promise((resolve, reject) => {
     if(index >= trackFiles.length) {
       reject('Index out of bones');
     } else {
-      const track = new Track(trackFiles[index]);
-      resolve(track.decorate());
+      const trackFile = trackFiles[index];
+      const trackPath = FileUtils.getFilePath(trackFile);
+      const track = new Track(trackFile,trackPath);
+      const decoratedTrack = track.decorate();
+      resolve(decoratedTrack);
     }
   });
 });

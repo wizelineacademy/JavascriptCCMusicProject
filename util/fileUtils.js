@@ -1,7 +1,7 @@
 'use strict'
 const fs = require('fs');
 
-const DIR = './tracks';
+const DIR = fs.realpathSync('./tracks');
 
 const getFiles = () => new Promise((resolve, reject) => {
   fs.readdir(DIR, (err, files) => {
@@ -11,7 +11,10 @@ const getFiles = () => new Promise((resolve, reject) => {
 
 const isWavFile = file => file.endsWith('.wav');
 
+const getFilePath = file => DIR + '/' + file;
+
 module.exports = {
   getFiles,
-  isWavFile
+  isWavFile,
+  getFilePath
 };
