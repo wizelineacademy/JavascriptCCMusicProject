@@ -12,17 +12,16 @@ const listTrackFiles = () => new Promise((resolve, reject) => {
 
 const getTrackFile = (index) => new Promise((resolve, reject) => {
   listTrackFiles()
-    .then( trackFiles => {
+    .then( async trackFiles => {
       if(index >= trackFiles.length) {
         reject('Index out of bones');
       } else {
         const trackFile = trackFiles[index];
         const trackPath = FileUtils.getFilePath(trackFile);
-        TimeUtils.getTrackMs(trackPath).then(trackMs => {
-          const track = new Track(trackFile,trackPath, trackMs);
-          const decoratedTrack = track.decorate();
-          resolve(decoratedTrack);
-        });
+        const trackMs = await TimeUtils.getTrackMs(trackPath);
+        const track = new Track(trackFile,trackPath, trackMs);
+        const decoratedTrack = track.decorate();
+        resolve(decoratedTrack);
       }
     });
 });
