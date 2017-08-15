@@ -2,7 +2,7 @@
 
 ## Requirements
 
- * NodeJS + NPM (See version in .nvmrc)
+ * NodeJS 8.4.0
 
 ## Getting Started
 
