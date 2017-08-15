@@ -38,8 +38,33 @@ const copyTrack = (index, newName) => new Promise((resolve, reject) => {
   });
 });
 
+const cropTrack = (index, newName, fromSec, toSec) => new Promise((resolve, reject) => {
+  getTrack(index).then(track => {
+    if(fromSec < 0) {
+      reject('Bad initial time');
+    }
+    if(toSec > (track.ms / 1000)) {
+      reject('Bad final time');
+    }
+    return EncodingUtils.decode(track.path);
+  }).then(audioObj => {
+    const fromByte = audioObj.sampleRate * fromSec;
+    const toByte = audioObj.sampleRate * toSec;
+    const croppedChannelData = audioObj.channelData.map(channel => channel.slice(fromByte,toByte));
+    const newAudioObj = {
+      sampleRate: audioObj.sampleRate,
+      channelData: croppedChannelData
+    }
+    const newPath = FileUtils.getFilePath(newName);
+    return EncodingUtils.encode(newAudioObj, newPath);
+  }).then(success => {
+    resolve({success: true});
+  });
+});
+
 module.exports = {
   listTrackFiles,
   getTrack,
-  copyTrack
+  copyTrack,
+  cropTrack
 };

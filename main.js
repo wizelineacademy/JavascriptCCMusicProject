@@ -33,6 +33,17 @@ server.route('/tracks/:index/copy/:newName').get((req,res) => {
   });
 });
 
+server.route('/tracks/:index/crop/:newName').get((req,res) => {
+  const index = req.params.index;
+  const newName = req.params.newName;
+  MusicLibrary.cropTrack(index, newName, 0, 10).then(state => {
+    res.json(state);
+  }).catch(err => {
+    res.status(HTTPStatus.BAD_REQUEST);
+    res.send(err);
+  });
+});
+
 server.listen(PORT,() => {
   console.log(`Server listening at port ${PORT}`);
 });
