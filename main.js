@@ -1,9 +1,27 @@
 'use strict'
-
+const express = require('express');
+const HTTPStatus = require('http-status');
 const MusicLibrary = require('./musicLibrary.js');
 
-console.info('tracks: ', MusicLibrary.listTrackFiles());
+const server = express();
+const PORT = 9000;
 
-console.info('track 1:', MusicLibrary.getTrackFile(1));
+server.route('/tracks').get((req,res) => {
+  MusicLibrary.listTrackFiles().then(tracks => {
+    res.json(tracks);
+  });
+});
 
-console.info('track 5:', MusicLibrary.getTrackFile(5));
+server.route('/tracks/:index').get((req,res) => {
+  const index = req.params.index;
+  MusicLibrary.getTrackFile(index).then(track => {
+    res.json(track);
+  }).catch(err => {
+    res.status(HTTPStatus.BAD_REQUEST);
+    res.send(err);
+  });
+});
+
+server.listen(PORT,() => {
+  console.log(`Server listening at port ${PORT}`);
+});
