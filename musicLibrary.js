@@ -6,7 +6,7 @@ function listTrackFiles() {
   return FileUtils.getFiles().filter( FileUtils.isWavFile );
 }
 
-function getTrackFile(index) {
+function getTrack(index) {
   const trackFiles = listTrackFiles();
   if(index >= trackFiles.length) {
     return null;
@@ -18,5 +18,5 @@ function getTrackFile(index) {
 
 module.exports = {
   listTrackFiles,
-  getTrackFile
+  getTrack
 };
