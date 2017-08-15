@@ -62,9 +62,28 @@ const cropTrack = (index, newName, fromSec, toSec) => new Promise((resolve, reje
   });
 });
 
+const amplifyTrack = (index, newName, percentage) => new Promise((resolve, reject) => {
+  getTrack(index).then(track => {
+    return EncodingUtils.decode(track.path);
+  }).then(audioObj => {
+    const amplifiedChannelData = audioObj.channelData.map(channel => channel.map(audioVal => {
+      return Math.min(audioVal * percentage, Number.MAX_VALUE);
+    }));
+    const newAudioObj = {
+      sampleRate: audioObj.sampleRate,
+      channelData: amplifiedChannelData
+    }
+    const newPath = FileUtils.getFilePath(newName);
+    return EncodingUtils.encode(newAudioObj, newPath);
+  }).then(success => {
+    resolve({success: true});
+  });
+});
+
 module.exports = {
   listTrackFiles,
   getTrack,
   copyTrack,
-  cropTrack
+  cropTrack,
+  amplifyTrack
 };
