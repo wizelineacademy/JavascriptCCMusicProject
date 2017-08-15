@@ -10,7 +10,7 @@ const listTrackFiles = () => new Promise((resolve, reject) => {
   })
 });
 
-const getTrackFile = (index) => new Promise((resolve, reject) => {
+const getTrack = (index) => new Promise((resolve, reject) => {
   listTrackFiles()
     .then( async trackFiles => {
       if(index >= trackFiles.length) {
@@ -28,5 +28,5 @@ const getTrackFile = (index) => new Promise((resolve, reject) => {
 
 module.exports = {
   listTrackFiles,
-  getTrackFile
+  getTrack
 };
