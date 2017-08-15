@@ -2,6 +2,9 @@
   "name": "music-dir",
   "version": "1.0.0",
   "description": "An API with operations with music files.",
+  "engines": {
+    "node": "8.4.0"
+  },
   "scripts": {
     "main": "node --harmony main.js"
   },
