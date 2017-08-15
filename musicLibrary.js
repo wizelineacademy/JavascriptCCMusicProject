@@ -1,6 +1,7 @@
 'use strict'
 const FileUtils = require('./util/fileUtils.js');
 const TimeUtils = require('./util/timeUtils.js');
+const EncodingUtils = require('./util/encodingUtils.js');
 const Track = require('./model/track.js');
 
 const listTrackFiles = () => new Promise((resolve, reject) => {
@@ -26,7 +27,19 @@ const getTrack = (index) => new Promise((resolve, reject) => {
     });
 });
 
+const copyTrack = (index, newName) => new Promise((resolve, reject) => {
+  getTrack(index).then(track => {
+    return EncodingUtils.decode(track.path);
+  }).then(audioObj => {
+    const newPath = FileUtils.getFilePath(newName);
+    return EncodingUtils.encode(audioObj, newPath);
+  }).then(success => {
+    resolve({success: true});
+  });
+});
+
 module.exports = {
   listTrackFiles,
-  getTrack
+  getTrack,
+  copyTrack
 };
