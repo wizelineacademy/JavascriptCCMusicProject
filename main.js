@@ -66,6 +66,18 @@ server.route('/tracks/:index/minify/:newName').get((req,res) => {
   });
 });
 
+server.route('/tracks/:index1/join/:index2/:newName').get((req,res) => {
+  const index1 = req.params.index1;
+  const index2 = req.params.index2;
+  const newName = req.params.newName;
+  MusicLibrary.joinTracks(index1, index2, newName).then(state => {
+    res.json(state);
+  }).catch(err => {
+    res.status(HTTPStatus.BAD_REQUEST);
+    res.send(err);
+  });
+});
+
 server.listen(PORT,() => {
   console.log(`Server listening at port ${PORT}`);
 });

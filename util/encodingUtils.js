@@ -24,7 +24,15 @@ const encode = (decoded, filepath) => new Promise((resolve, reject) => {
   });
 });
 
+const joinBuffers = (buff1, buff2) => {
+  const combinedBuff = new Float32Array(buff1.length + buff2.length);
+  combinedBuff.set(buff1);
+  combinedBuff.set(buff2, buff1.length);
+  return combinedBuff;
+}
+
 module.exports = {
   decode,
-  encode
+  encode,
+  joinBuffers
 };

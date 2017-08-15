@@ -80,10 +80,37 @@ const amplifyTrack = (index, newName, percentage) => new Promise((resolve, rejec
   });
 });
 
+const joinTracks = (index1, index2, newName) => new Promise((resolve, reject) => {
+  const p1 = new Promise((resolve, reject) => {
+    getTrack(index1).then(track => {
+      resolve(EncodingUtils.decode(track.path));
+    })
+  });
+  const p2 = new Promise((resolve, reject) => {
+    getTrack(index2).then(track => {
+      resolve(EncodingUtils.decode(track.path));
+    })
+  });
+  Promise.all([p1, p2]).then(([audioObj1, audioObj2]) => {
+    const channels = Math.min(audioObj1.numberOfChannels, audioObj2.numberOfChannels);
+    const leftChannelData = EncodingUtils.joinBuffers(audioObj1.channelData[0],audioObj2.channelData[0]);
+    const rightChannelData = (channels == 2) ? EncodingUtils.joinBuffers(audioObj1.channelData[1],audioObj2.channelData[1]) : undefined;
+    const newAudioObj = {
+      sampleRate: audioObj1.sampleRate,
+      channelData: [leftChannelData, rightChannelData]
+    }
+    const newPath = FileUtils.getFilePath(newName);
+    return EncodingUtils.encode(newAudioObj, newPath);
+  }).then(success => {
+    resolve({success: true});
+  });
+});
+
 module.exports = {
   listTrackFiles,
   getTrack,
   copyTrack,
   cropTrack,
-  amplifyTrack
+  amplifyTrack,
+  joinTracks
 };
