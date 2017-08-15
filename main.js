@@ -1,2 +1,4 @@
 'use strict'
-console.log('hello world!')
+const MusicLibrary = require('./musicLibrary.js');
+
+MusicLibrary.sayHello();
