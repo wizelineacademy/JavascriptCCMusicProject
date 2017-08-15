@@ -7,14 +7,14 @@ const server = express();
 const PORT = 9000;
 
 server.route('/tracks').get((req,res) => {
-  MusicLibrary.listTrackFiles().then(tracks => {
-    res.json(tracks);
+  MusicLibrary.listTrackFiles().then(trackFiles => {
+    res.json(trackFiles);
   });
 });
 
 server.route('/tracks/:index').get((req,res) => {
   const index = req.params.index;
-  MusicLibrary.getTrackFile(index).then(track => {
+  MusicLibrary.getTrack(index).then(track => {
     res.json(track);
   }).catch(err => {
     res.status(HTTPStatus.BAD_REQUEST);
