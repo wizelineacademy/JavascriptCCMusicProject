@@ -6,4 +6,4 @@
 
 ## Getting Started
 
- * Run the `main` script defined in the `package.json`. Use the command ```npm run main```
+ * Run the `main.js` script defined in the project. Use the command ```npm start```
