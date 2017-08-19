@@ -1,10 +1,10 @@
 'use strict'
 const moment = require('moment');
-const AV = require('av');
+const EncodingUtils = require('./encodingUtils.js');
 
 const getTrackMs = trackPath => new Promise((resolve, reject) => {
-  AV.Asset.fromFile(trackPath).get('duration', ms => {
-    resolve(ms);
+  EncodingUtils.decode(trackPath).then((decodedTrack) => {
+    resolve(parseInt(1000 * ( decodedTrack.length / decodedTrack.sampleRate)));
   });
 });
 
